@@ -10,7 +10,7 @@ library(readr)
 library(tidyr)
 
 # Définir manuellement les périodes (puisqu'on ne peut pas faire list.files() en ligne)
-periodes <- c("1970-1979", "1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2029")
+periodes <- c("1960-1969", "1970-1979", "1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2029")
 
 # Charger les périodes disponibles localement
 # periode_files <- list.files("data/periodes", pattern = "feux_.*\\.rds", full.names = FALSE)
