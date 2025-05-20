@@ -9,15 +9,12 @@ library(sf)
 library(readr)
 library(tidyr)
 
-# Charger les périodes disponibles
-# periode_files <- list.files("data/periodes", pattern = "feux_.*\\.rds", full.names = TRUE)
-# periodes <- gsub("feux_|\\.rds", "", basename(periode_files)) %>% sort()
-periode_url <- paste0("https://raw.githubusercontent.com/hgesdrn/feux_qc_shiny/main/data/periodes/feux_", input$periode, ".rds")
-feux_filtrés <- reactive({
-  req(input$periode)
-  readRDS(gzcon(url(periode_url)))
-})
+# Définir manuellement les périodes (puisqu'on ne peut pas faire list.files() en ligne)
+periodes <- c("1970-1979", "1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2023")
 
+# Charger les périodes disponibles localement
+# periode_files <- list.files("data/periodes", pattern = "feux_.*\\.rds", full.names = FALSE)
+# periodes <- gsub("feux_|\\.rds", "", basename(periode_files)) %>% sort()
 
 
 # Charger les données agrégées pour les graphiques
@@ -51,8 +48,8 @@ server <- function(input, output, session) {
   # Réactif : charge les polygones de la période sélectionnée
   feux_filtrés <- reactive({
     req(input$periode)
-    file_path <- file.path("data/periodes", paste0("feux_", input$periode, ".rds"))
-    readRDS(file_path)
+    url <- paste0("https://raw.githubusercontent.com/hgesdrn/feux_qc_shiny/main/data/periodes/feux_", input$periode, ".rds")
+    readRDS(gzcon(url(url)))
   })
   
   # Carte de base
