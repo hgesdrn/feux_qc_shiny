@@ -2,7 +2,7 @@ name: Deploy Shiny App to shinyapps.io
 
 on:
   push:
-    branches: [ main ]  # ou votre branche de production
+    branches: [ main ]  # Déclenche le déploiement lors d'un push sur main
 
 jobs:
   deploy:
@@ -15,14 +15,13 @@ jobs:
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
 
-      - name: Install dependencies
+      - name: Set up R dependencies
         run: |
-          install.packages("remotes")
+          install.packages(c("remotes"))
           remotes::install_cran("rsconnect")
-
         shell: Rscript {0}
 
-      - name: Deploy app to shinyapps.io
+      - name: Deploy to shinyapps.io
         env:
           SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
           SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
@@ -32,6 +31,5 @@ jobs:
             token = Sys.getenv("SHINYAPPS_TOKEN"),
             secret = Sys.getenv("SHINYAPPS_SECRET")
           )
-          rsconnect::deployApp(appDir = ".")
-
+          rsconnect::deployApp(appDir = ".", forceUpdate = TRUE)
         shell: Rscript {0}
