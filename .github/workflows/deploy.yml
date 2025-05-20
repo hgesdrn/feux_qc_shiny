@@ -1,15 +1,15 @@
-name: Deploy Shiny App
+name: Deploy Shiny App to shinyapps.io
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]  # ou votre branche de production
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up R
@@ -17,14 +17,21 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages("rsconnect")
-          install.packages(c("shiny", "leaflet", "sf", "dplyr", "shinyWidgets", "ggplot2", "scales", "ggpubr", "tidyr", "readr"))
+          install.packages("remotes")
+          remotes::install_cran("rsconnect")
 
+        shell: Rscript {0}
 
-      - name: Deploy Shiny App to shinyapps.io
+      - name: Deploy app to shinyapps.io
+        env:
+          SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
+          SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
         run: |
-          install.packages("rsconnect")
-          rsconnect::setAccountInfo(name='hgesdrn',
-                                    token='${{ secrets.SHINYAPPS_TOKEN }}',
-                                    secret='${{ secrets.SHINYAPPS_SECRET }}')
+          rsconnect::setAccountInfo(
+            name = "hgesdrn",
+            token = Sys.getenv("SHINYAPPS_TOKEN"),
+            secret = Sys.getenv("SHINYAPPS_SECRET")
+          )
           rsconnect::deployApp(appDir = ".")
+
+        shell: Rscript {0}
