@@ -20,10 +20,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libgit2-dev
 
-      - name: Install R package dependencies
+      - name: Install R package dependencies manually
         run: |
-          Rscript -e 'install.packages("remotes", repos = "https://cloud.r-project.org")'
-          Rscript -e 'remotes::install_deps(dependencies = TRUE)'
+          Rscript -e 'install.packages(c("shiny", "leaflet", "dplyr", "shinyWidgets", "ggplot2", "scales", "ggpubr", "sf", "readr", "tidyr"), repos = "https://cloud.r-project.org")'
 
       - name: Install rsconnect
         run: |
