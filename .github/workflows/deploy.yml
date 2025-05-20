@@ -18,15 +18,11 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libgit2-dev
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libudunits2-dev libgdal-dev libgeos-dev libproj-dev
 
-      - name: Install R package dependencies manually
+      - name: Install R package dependencies
         run: |
-          Rscript -e 'install.packages(c("shiny", "leaflet", "dplyr", "shinyWidgets", "ggplot2", "scales", "ggpubr", "sf", "readr", "tidyr"), repos = "https://cloud.r-project.org")'
-
-      - name: Install rsconnect
-        run: |
-          Rscript -e 'install.packages("rsconnect", repos = "https://cloud.r-project.org")'
+          Rscript -e 'install.packages(c("shiny", "leaflet", "sf", "dplyr", "readr", "stringr", "ggplot2", "htmltools"), repos = "https://cloud.r-project.org")'
 
       - name: Deploy app to shinyapps.io
         env:
@@ -34,12 +30,9 @@ jobs:
           SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
           SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
         run: |
-          Rscript -e '
-            library(rsconnect);
-            rsconnect::setAccountInfo(
-              name = Sys.getenv("SHINYAPPS_NAME"),
-              token = Sys.getenv("SHINYAPPS_TOKEN"),
-              secret = Sys.getenv("SHINYAPPS_SECRET")
-            );
-            rsconnect::deployApp(appDir = ".", appName = "feux_qc_shiny", forceUpdate = TRUE)
-          '
+          Rscript -e 'install.packages("rsconnect", repos = "https://cloud.r-project.org"); 
+                      library(rsconnect); 
+                      rsconnect::setAccountInfo(name=Sys.getenv("SHINYAPPS_NAME"), 
+                                                token=Sys.getenv("SHINYAPPS_TOKEN"), 
+                                                secret=Sys.getenv("SHINYAPPS_SECRET")); 
+                      rsconnect::deployApp(appDir = ".", appName = "feux_qc_shiny", forceUpdate = TRUE)'
