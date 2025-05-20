@@ -16,8 +16,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c("shiny", "rsconnect", "leaflet", "sf", "dplyr", "shinyWidgets",
-                             "ggplot2", "scales", "ggpubr", "tidyr", "readr"))
+          install.packages("rsconnect")
+          install.packages(c("shiny", "leaflet", "sf", "dplyr", "shinyWidgets", "ggplot2", "scales", "ggpubr", "tidyr", "readr"))
+
         shell: Rscript {0}
 
       - name: Deploy app to shinyapps.io
