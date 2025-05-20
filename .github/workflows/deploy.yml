@@ -20,15 +20,11 @@ jobs:
           install.packages("rsconnect")
           install.packages(c("shiny", "leaflet", "sf", "dplyr", "shinyWidgets", "ggplot2", "scales", "ggpubr", "tidyr", "readr"))
 
-      - name: Deploy to shinyapps.io
-        env:
-          RSCONTENT_TOKEN: ${{ secrets.RSCONTENT_TOKEN }}
-          RSCONTENT_SECRET: ${{ secrets.RSCONTENT_SECRET }}
+
+      - name: Deploy Shiny App to shinyapps.io
         run: |
-          library(rsconnect)
-          rsconnect::setAccountInfo(
-            name='hgesdrn',
-            token=Sys.getenv("RSCONTENT_TOKEN"),
-            secret=Sys.getenv("RSCONTENT_SECRET")
-          )
-          rsconnect::deployApp(appDir = ".", appName = "feux_qc_shiny")
+          install.packages("rsconnect")
+          rsconnect::setAccountInfo(name='hgesdrn',
+                                    token='${{ secrets.SHINYAPPS_TOKEN }}',
+                                    secret='${{ secrets.SHINYAPPS_SECRET }}')
+          rsconnect::deployApp(appDir = ".")
