@@ -18,7 +18,16 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libgit2-dev
+
+      - name: Install R package dependencies
+        run: |
+          Rscript -e 'install.packages("remotes", repos = "https://cloud.r-project.org")'
+          Rscript -e 'remotes::install_deps(dependencies = TRUE)'
+
+      - name: Install rsconnect
+        run: |
+          Rscript -e 'install.packages("rsconnect", repos = "https://cloud.r-project.org")'
 
       - name: Deploy app to shinyapps.io
         env:
@@ -26,9 +35,12 @@ jobs:
           SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
           SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
         run: |
-          Rscript -e 'install.packages("rsconnect", repos = "https://cloud.r-project.org"); 
-                      library(rsconnect); 
-                      rsconnect::setAccountInfo(name=Sys.getenv("SHINYAPPS_NAME"), 
-                                                token=Sys.getenv("SHINYAPPS_TOKEN"), 
-                                                secret=Sys.getenv("SHINYAPPS_SECRET")); 
-                      rsconnect::deployApp(appDir = ".", appName = "feux_qc_shiny")'
+          Rscript -e '
+            library(rsconnect);
+            rsconnect::setAccountInfo(
+              name = Sys.getenv("SHINYAPPS_NAME"),
+              token = Sys.getenv("SHINYAPPS_TOKEN"),
+              secret = Sys.getenv("SHINYAPPS_SECRET")
+            );
+            rsconnect::deployApp(appDir = ".", appName = "feux_qc_shiny")
+          '
