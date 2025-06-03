@@ -1,7 +1,4 @@
-# Installer shinyWidgets si absent (utile pour le déploiement automatique)
-if (!requireNamespace("shinyWidgets", quietly = TRUE)) {
-  install.packages("shinyWidgets")
-}
+
 library(bslib)
 library(shiny)
 library(leaflet)
