@@ -5,6 +5,6 @@ account: hgesdrn
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 14790675
-bundleId: 10389986
+bundleId: 10390086
 url: https://hgesdrn.shinyapps.io/feux_qc_shiny/
 version: 1
