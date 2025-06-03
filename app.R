@@ -10,7 +10,7 @@ library(readr)
 library(tidyr)
 
 # Périodes fixes
-periodes <- c("1960-1969", "1970-1979", "1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2029")
+periodes <- c("1900-1909","1910-1919","1920-1929","1930-1939","1940-1949","1950-1959","1960-1969", "1970-1979", "1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2029")
 
 # Données agrégées
 url_aggr <- "https://raw.githubusercontent.com/hgesdrn/feux_qc_shiny/main/data/feux_aggr.RDS"
@@ -22,7 +22,7 @@ prov_sf <- readRDS(gzcon(url(url_prov)))
 
 # UI
 ui <- fluidPage(
-  titlePanel("Feux de forêt au Québec par période"),
+  titlePanel("Feux de forêt au Québec de 1900 à 2023"),
   fluidRow(
     column(4,
            # Hauteur égale à celle de la carte (800px)
@@ -33,7 +33,7 @@ ui <- fluidPage(
                                grid = TRUE,
                                animate = TRUE),
                br(),
-               plotOutput("barplots", height = "600px")
+               plotOutput("barplots", height = "800px")
            )
     ),
     column(8,
