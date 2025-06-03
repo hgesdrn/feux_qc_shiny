@@ -1,4 +1,16 @@
+# Fichiers temporaires de R
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+
+# Environnement renv (sauf les fichiers nécessaires)
+renv/library/
+renv/staging/
+
+# MacOS et autres fichiers systèmes
+.DS_Store
+
+# Fichiers de déploiement temporaires (par prudence)
+*.tar.gz
+*.Rproj
