@@ -2,7 +2,7 @@
 if (!requireNamespace("shinyWidgets", quietly = TRUE)) {
   install.packages("shinyWidgets")
 }
-library(shinyWidgets)
+library(bslib)
 library(shiny)
 library(leaflet)
 library(dplyr)
@@ -62,8 +62,13 @@ ui <- fluidPage(
     ),
     
     column(6,
-           leafletOutput("carte", height = "700px")
+           div(style = "height:700px; padding: 20px; background-color: #f9f9f9;
+                    border: 1px solid #ccc; border-radius: 8px; box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+               # h4("Carte des feux de forêt"),
+               leafletOutput("carte", height = "640px")
+           )
     )
+    
   )
 )
 
