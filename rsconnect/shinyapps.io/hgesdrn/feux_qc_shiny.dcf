@@ -1,0 +1,10 @@
+name: feux_qc_shiny
+title:
+username: hgesdrn
+account: hgesdrn
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 14790675
+bundleId: 10314744
+url: https://hgesdrn.shinyapps.io/feux_qc_shiny/
+version: 1

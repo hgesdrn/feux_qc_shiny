@@ -9,35 +9,35 @@ library(sf)
 library(readr)
 library(tidyr)
 
-# Définir manuellement les périodes (puisqu'on ne peut pas faire list.files() en ligne)
+# Périodes fixes
 periodes <- c("1960-1969", "1970-1979", "1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2029")
 
-# Charger les périodes disponibles localement
-# periode_files <- list.files("data/periodes", pattern = "feux_.*\\.rds", full.names = FALSE)
-# periodes <- gsub("feux_|\\.rds", "", basename(periode_files)) %>% sort()
+# Données agrégées
+url_aggr <- "https://raw.githubusercontent.com/hgesdrn/feux_qc_shiny/main/data/feux_aggr.RDS"
+aggr_data <- readRDS(gzcon(url(url_aggr)))
 
-
-# Charger les données agrégées pour les graphiques
-# aggr_data <- readRDS("data/feux_aggr.RDS")
-url <- "https://raw.githubusercontent.com/hgesdrn/feux_qc_shiny/main/data/feux_aggr.RDS"
-aggr_data <- readRDS(gzcon(url(url)))
-
+# Chargement de la couche de province sans le Saguenay
+url_prov <- "https://github.com/hgesdrn/feux_qc_shiny/blob/main/data/prov_sf.rds?raw=true"
+prov_sf <- readRDS(gzcon(url(url_prov)))
 
 # UI
 ui <- fluidPage(
   titlePanel("Feux de forêt au Québec par période"),
-  sidebarLayout(
-    sidebarPanel(
-      sliderTextInput("periode", "Choisir une période :",
-                      choices = periodes,
-                      selected = periodes[1],
-                      grid = TRUE,
-                      animate = TRUE),
-      br(),
-      plotOutput("barplots", height = "500px")
+  fluidRow(
+    column(4,
+           # Hauteur égale à celle de la carte (800px)
+           div(style = "height:800px; overflow-y:auto;",
+               sliderTextInput("periode", "Choisir une période :",
+                               choices = periodes,
+                               selected = periodes[1],
+                               grid = TRUE,
+                               animate = TRUE),
+               br(),
+               plotOutput("barplots", height = "600px")
+           )
     ),
-    mainPanel(
-      leafletOutput("carte", height = "800px")
+    column(8,
+           leafletOutput("carte", height = "800px")
     )
   )
 )
@@ -54,21 +54,28 @@ server <- function(input, output, session) {
   
   # Carte de base
   output$carte <- renderLeaflet({
-    leaflet() %>%
+    leaflet(options = leafletOptions(preferCanvas = TRUE)) %>%
       addProviderTiles("CartoDB.Positron") %>%
+      addPolygons(data = prov_sf,
+                  color = NA,
+                  fillColor = "gray30",
+                  fillOpacity = 0.6,
+                  weight = 0,
+                  group = "Province") %>%
       fitBounds(lng1 = -79.5, lat1 = 44.5, lng2 = -56.5, lat2 = 63)
   })
   
-  # Met à jour les polygones affichés
+  # Mise à jour des polygones de feux
   observe({
     leafletProxy("carte") %>%
-      clearShapes() %>%
+      clearGroup("Feux") %>%
       addPolygons(
         data = feux_filtrés(),
         color = NA,
         fillColor = "#8B0000",
         fillOpacity = 0.75,
-        weight = 0
+        weight = 0,
+        group = "Feux"
       )
   })
   
@@ -79,7 +86,7 @@ server <- function(input, output, session) {
     toutes_periodes <- periodes
     
     get_region_data <- function(region_name) {
-      region_data <- aggr_data %>%
+      aggr_data %>%
         filter(Region == region_name) %>%
         right_join(data.frame(Periode = toutes_periodes), by = "Periode") %>%
         mutate(
