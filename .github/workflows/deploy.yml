@@ -24,6 +24,10 @@ jobs:
         run: |
           Rscript -e 'install.packages(c("shiny", "leaflet", "sf", "dplyr", "readr", "stringr", "ggplot2", "htmltools", "shinyWidgets"), repos = "https://cloud.r-project.org")'
 
+      - name: Restore R environment with renv
+        run: |
+          Rscript -e 'install.packages("renv", repos = "https://cloud.r-project.org"); renv::restore()'
+
 
       - name: Deploy app to shinyapps.io
         env:
