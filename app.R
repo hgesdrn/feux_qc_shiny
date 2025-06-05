@@ -138,7 +138,7 @@ server <- function(input, output, session) {
         theme(
           axis.text.y = element_text(face = "bold", size = 12),
           axis.title.y = element_text(face = "bold", size = 14, margin = margin(r = 10)),
-          axis.text.x = element_text(hjust = 1, face = "bold", size = 12), # angle = 45, 
+          axis.text.x = element_text(angle = 20, hjust = 1, face = "bold", size = 12), # angle = 45, 
           axis.title.x = element_text(face = "bold", size = 14, margin = margin(t = 15)),
           plot.title = element_text(size = 16, face = "bold", hjust = 0.5)
         )
@@ -147,7 +147,7 @@ server <- function(input, output, session) {
         p <- p +
           labs(x = "Période") +
           theme(
-            axis.text.x = element_text(hjust = 1, face = "bold"), #angle = 45, 
+            axis.text.x = element_text(angle = 20,hjust = 1, face = "bold"), #angle = 45, 
             axis.title.x = element_text(face = "bold")
           )
       } else {
