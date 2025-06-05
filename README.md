@@ -1,7 +1,19 @@
 
-![Deploy Shiny App](https://github.com/hgesdrn/feux_qc_shiny/actions/workflows/deploy.yml/badge.svg)
 # feux_qc_shiny
-Application Shiny pour visualiser les feux de forêt au Québec de 1880 à 2023 par période de 10 ans
 
-## ArcGIS Online Storymap
-Cette application sert dans une storymap pour le site du Centre de recherche sur la Boréalie (CREB) pour dresser le portrait régional forestier du Saguenay Lac-St-Jean. Ce portrait régional inclus des informations sur la végétation, les domaines bioclimatiques ainsi que les perturbations naturelles et les interventions anthropiques qui façonnent la forêt de la région.
+[![Deploy Shiny App](https://github.com/hgesdrn/feux_qc_shiny/actions/workflows/deploy.yml/badge.svg)](https://github.com/hgesdrn/feux_qc_shiny/actions/workflows/deploy.yml)
+
+🌲 Application Shiny interactive pour visualiser les contours historiques des feux de forêt au Québec (1990–2023).
+
+🔗 **Application en ligne** : [https://hgesdrn.shinyapps.io/feux_qc_shiny/](https://hgesdrn.shinyapps.io/feux_qc_shiny/)
+
+---
+
+## Description
+
+Cette application permet :
+- d'explorer les feux par année à l'aide d'un curseur interactif ;
+- de consulter les superficies brûlées sous forme d'histogramme dynamique ;
+- de naviguer sur une carte interactive avec un fond de carte provincial.
+
+Les données sont hébergées dans ce dépôt et mises à jour automatiquement lors de chaque déploiement.
