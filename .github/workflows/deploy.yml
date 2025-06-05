@@ -20,9 +20,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libudunits2-dev libgdal-dev libgeos-dev libproj-dev
 
-      - name: Install R package dependencies
+      - name: Install renv
         run: |
-          Rscript -e 'install.packages(c("shiny", "leaflet", "sf", "dplyr", "readr", "stringr", "ggplot2", "htmltools"), repos = "https://cloud.r-project.org")'
+          Rscript -e 'install.packages("renv", repos = "https://cloud.r-project.org")'
+
+      - name: Restore R environment with renv
+        run: |
+          Rscript -e 'renv::restore()'
 
       - name: Deploy app to shinyapps.io
         env:
