@@ -137,9 +137,9 @@ server <- function(input, output, session) {
         theme_minimal() +
         theme(
           axis.text.y = element_text(face = "bold", size = 12),
-          axis.title.y = element_text(face = "bold", size = 12, margin = margin(r = 10)),
+          axis.title.y = element_text(face = "bold", size = 14, margin = margin(r = 10)),
           axis.text.x = element_text(hjust = 1, face = "bold", size = 12), # angle = 45, 
-          axis.title.x = element_text(face = "bold", size = 12, margin = margin(r = 10)),
+          axis.title.x = element_text(face = "bold", size = 14, margin = margin(t = 15)),
           plot.title = element_text(size = 16, face = "bold", hjust = 0.5)
         )
       
