@@ -27,7 +27,35 @@ prov_sf <- readRDS(gzcon(url(url_prov)))
 
 # UI
 ui <- fluidPage(
-  titlePanel("Feux de forêt au Québec de 1900 à 2023"),
+  # Style CSS pour la bannière et les boîtes
+  tags$style(HTML("
+  .header-title {
+    background-color: #2C3E50;
+    color: white;
+    padding: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: left;
+    text-transform: uppercase;
+    border-radius: 0px;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+  }
+  .box-style {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    height: 700px;
+    overflow-y: auto;
+  }
+")),
+  
+  # Bannière de titre
+  div("FEUX DE FORÊT AU QUÉBEC DE 1900 À 2023", class = "header-title"),
+  
+  
   tags$style(HTML("
     .irs-grid-text, .irs-single, .irs-bar, .irs-min, .irs-max, .irs-from, .irs-to {
       font-size: 11px !important;
