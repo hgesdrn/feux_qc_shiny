@@ -10,6 +10,7 @@ library(ggpubr)
 library(sf)
 library(readr)
 library(tidyr)
+library(shinydashboard)
 
 # Périodes fixes
 periodes <- c("1900-1909","1910-1919","1920-1929","1930-1939","1940-1949","1950-1959","1960-1969", "1970-1979", "1980-1989", "1990-1999", "2000-2009", "2010-2019", "2020-2029")
