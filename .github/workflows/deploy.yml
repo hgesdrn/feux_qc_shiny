@@ -34,4 +34,9 @@ jobs:
         run: Rscript -e 'install.packages(c("renv", "rsconnect"), repos = "https://cloud.r-project.org")'
 
       - name: Restore R packages with renv
-        r
+        run: Rscript -e 'renv::restore()'
+
+      - name: Deploy app to shinyapps.io
+        run: |
+          Rscript -e "rsconnect::setAccountInfo(name=Sys.getenv('SHINYAPPS_NAME'), token=Sys.getenv('SHINYAPPS_TOKEN'), secret=Sys.getenv('SHINYAPPS_SECRET'))"
+          Rscript -e "rsconnect::deployApp(appDir = '.', appName = 'feux_qc_shiny', forceUpdate = TRUE)"
