@@ -191,7 +191,7 @@ server <- function(input, output, session) {
       return(p)
     }
     
-    p1 <- plot_region(data_saguenay, show_x_labels = FALSE) + ggtitle("Région administrative du Saguenay")
+    p1 <- plot_region(data_saguenay, show_x_labels = FALSE) + ggtitle("Région administrative du Saguenay-Lac-Saint-Jean")
     p2 <- plot_region(data_quebec, show_x_labels = TRUE) + ggtitle("Province du Québec")
     
     ggarrange(p1, p2, ncol = 1, heights = c(1, 1))
